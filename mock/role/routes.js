@@ -497,30 +497,6 @@ const asyncRoutes = [
     ]
   },
 
-  {
-    path: '/i18n',
-    component: 'layout/Layout',
-    children: [
-      {
-        path: 'index',
-        component: 'views/i18n-demo/index',
-        name: 'I18n',
-        meta: { title: 'I18n', icon: 'international' }
-      }
-    ]
-  },
-
-  {
-    path: 'external-link',
-    component: 'layout/Layout',
-    children: [
-      {
-        path: 'https://github.com/PanJiaChen/vue-element-admin',
-        meta: { title: 'External Link', icon: 'link' }
-      }
-    ]
-  },
-
   { path: '*', redirect: '/404', hidden: true }
 ]
 
