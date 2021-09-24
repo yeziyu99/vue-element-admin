@@ -138,7 +138,7 @@ export const asyncRoutes = [
     meta: {
       title: '权限',
       icon: 'lock',
-      roles: ['admin', 'editor'] // you can set roles in root nav
+      roles: ['admin'] // you can set roles in root nav
     },
     children: [
       // {
@@ -164,8 +164,8 @@ export const asyncRoutes = [
         component: () => import('@/views/permission/role'),
         name: 'RolePermission',
         meta: {
-          title: '角色权限',
-          roles: ['admin']
+          title: '角色权限'
+          // roles: ['admin']
         }
       }
     ]
@@ -175,83 +175,47 @@ export const asyncRoutes = [
     component: Layout,
     redirect: '/douyu/page',
     alwaysShow: true, // will always show the root menu
-    name: 'douyu',
+    name: 'Douyu',
     meta: {
       title: '斗鱼',
-      icon: 'lock',
-      roles: ['admin', 'editor'] // you can set roles in root nav
+      icon: 'lock'
+      // roles: ['admin'] // you can set roles in root nav
     },
     children: [
-      // {
-      //   path: 'page',
-      //   component: () => import('@/views/permission/page'),
-      //   name: 'PagePermission',
-      //   meta: {
-      //     title: '权限切换',
-      //     roles: ['admin'] // or you can only set roles in sub nav
-      //   }
-      // },
-      // {
-      //   path: 'directive',
-      //   component: () => import('@/views/permission/directive'),
-      //   name: 'DirectivePermission',
-      //   meta: {
-      //     title: '权限指令'
-      //     // if do not set roles, means: this page does not require permission
-      //   }
-      // },
       {
         path: '78622',
-        component: () => import('@/views/permission/role'),
-        name: 'erke',
+        component: () => import('@/views/douyu/index'),
+        name: 'Erke',
         meta: {
-          title: '78622',
-          roles: ['admin']
+          title: '二珂'
+          // roles: ['admin']
         }
       }
     ]
   },
-  {
-    path: '/huya',
-    component: Layout,
-    redirect: '/huya/page',
-    alwaysShow: true, // will always show the root menu
-    name: 'huya',
-    meta: {
-      title: '虎牙',
-      icon: 'lock',
-      roles: ['admin', 'editor'] // you can set roles in root nav
-    },
-    children: [
-      // {
-      //   path: 'page',
-      //   component: () => import('@/views/permission/page'),
-      //   name: 'PagePermission',
-      //   meta: {
-      //     title: '权限切换',
-      //     roles: ['admin'] // or you can only set roles in sub nav
-      //   }
-      // },
-      // {
-      //   path: 'directive',
-      //   component: () => import('@/views/permission/directive'),
-      //   name: 'DirectivePermission',
-      //   meta: {
-      //     title: '权限指令'
-      //     // if do not set roles, means: this page does not require permission
-      //   }
-      // },
-      {
-        path: 'role',
-        component: () => import('@/views/permission/role'),
-        name: 'RolePermission',
-        meta: {
-          title: '272519',
-          roles: ['admin']
-        }
-      }
-    ]
-  },
+  // {
+  //   path: '/huya',
+  //   component: Layout,
+  //   redirect: '/huya/page',
+  //   alwaysShow: true, // will always show the root menu
+  //   name: 'Huya',
+  //   meta: {
+  //     title: '虎牙',
+  //     icon: 'lock',
+  //     // roles: ['admin'] // you can set roles in root nav
+  //   },
+  //   children: [
+  //     {
+  //       path: 'role',
+  //       component: () => import('@/views/permission/role'),
+  //       name: 'SR私人',
+  //       meta: {
+  //         title: '272519',
+  //         // roles: ['admin']
+  //       }
+  //     }
+  //   ]
+  // },
 
   // {
   //   path: '/icon',

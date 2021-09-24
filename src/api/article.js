@@ -39,3 +39,26 @@ export function updateArticle(data) {
     data
   })
 }
+export function yeziyuList(query) {
+  return request({
+    url: '/vue-element-admin/article/yeziyu_list',
+    method: 'get',
+    params: query
+  })
+}
+
+export function yeziyuCreateArticle(data) {
+  return request({
+    url: '/vue-element-admin/article/yeziyu_create',
+    method: 'post',
+    data
+  })
+}
+
+export function yeziyuUpdateArticle(data) {
+  return request({
+    url: '/vue-element-admin/article/yeziyu_update',
+    method: 'post',
+    data
+  })
+}
