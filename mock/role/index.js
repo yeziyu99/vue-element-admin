@@ -17,22 +17,6 @@ const roles = [
     description: '查看某些页面',
     routes: routes.filter(i => i.path !== '/permission')// just a mock
   },
-  {
-    key: 'visitor',
-    name: 'visitor',
-    description: '只是一个游客，只能看到主页和文档页面',
-    routes: [{
-      path: '',
-      redirect: 'dashboard',
-      children: [
-        {
-          path: 'dashboard',
-          name: 'Dashboard',
-          meta: { title: 'dashboard', icon: 'dashboard' }
-        }
-      ]
-    }]
-  }
 ]
 
 module.exports = [

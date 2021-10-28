@@ -1,18 +1,60 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-input v-model="listQuery.yeziyu_name" placeholder="歌名" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
-      <el-input v-model="listQuery.yeziyu_data" placeholder="歌词弹幕" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
-      <el-select v-model="listQuery.sort" style="width: 140px" class="filter-item" @change="handleFilter">
-        <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key" />
+      <el-input
+        v-model="listQuery.yeziyu_name"
+        placeholder="歌名"
+        style="width: 200px"
+        class="filter-item"
+        @keyup.enter.native="handleFilter"
+      />
+      <el-input
+        v-model="listQuery.yeziyu_data"
+        placeholder="歌词弹幕"
+        style="width: 200px"
+        class="filter-item"
+        @keyup.enter.native="handleFilter"
+      />
+      <el-select
+        v-model="listQuery.sort"
+        style="width: 140px"
+        class="filter-item"
+        @change="handleFilter"
+      >
+        <el-option
+          v-for="item in sortOptions"
+          :key="item.key"
+          :label="item.label"
+          :value="item.key"
+        />
       </el-select>
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
+      <el-button
+        v-waves
+        class="filter-item"
+        type="primary"
+        icon="el-icon-search"
+        @click="handleFilter"
+      >
         搜索
       </el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
+      <el-button
+        class="filter-item"
+        style="margin-left: 10px"
+        type="primary"
+        icon="el-icon-edit"
+        @click="handleCreate"
+      >
         新增
       </el-button>
-      <el-button v-waves :loading="downloadLoading" title="仅导出当前页面" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
+      <el-button
+        v-waves
+        :loading="downloadLoading"
+        title="仅导出当前页面"
+        class="filter-item"
+        type="primary"
+        icon="el-icon-download"
+        @click="handleDownload"
+      >
         导出
       </el-button>
     </div>
@@ -24,62 +66,101 @@
       border
       fit
       highlight-current-row
-      style="width: 100%;"
+      style="width: 100%"
       @sort-change="sortChange"
     >
-      <el-table-column label="ID" prop="id" sortable="custom" align="center" width="80" :class-name="getSortClass('id')">
+      <el-table-column
+        type="index"
+        :index="indexMethod"
+        width="55"
+        label="#"
+      />
+      <!-- <el-table-column label="ID" prop="id"  sortable="custom" align="center" width="80" :class-name="getSortClass('id')">
         <template slot-scope="{row}">
-          <span>{{ row.id }}</span>
+          <span>{{ row }}</span>
         </template>
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column label="歌名" min-width="100px">
-        <template slot-scope="{row}">
-          <span class="link-type" @click="handleUpdate(row)">{{ row.yeziyu_name }}</span>
+        <template slot-scope="{ row }">
+          <span class="link-type" @click="handleUpdate(row)">{{
+            row.yeziyu_name
+          }}</span>
         </template>
       </el-table-column>
       <el-table-column label="弹幕" min-width="110px">
-        <template slot-scope="{row}">
+        <template slot-scope="{ row }">
           <span>{{ row.yeziyu_data }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
-        <template slot-scope="{row,$index}">
+      <el-table-column
+        label="操作"
+        align="center"
+        width="230"
+        class-name="small-padding fixed-width"
+      >
+        <template slot-scope="{ row, $index }">
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
             修改
           </el-button>
-          <el-button v-if="row.status!='deleted'" size="mini" type="danger" @click="handleDelete(row,$index)">
+          <el-button
+            v-if="row.status != 'deleted'"
+            size="mini"
+            type="danger"
+            @click="handleDelete(row, $index)"
+          >
             删除
           </el-button>
         </template>
       </el-table-column>
     </el-table>
 
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
+    <pagination
+      v-show="total > 0"
+      :total="total"
+      :page.sync="listQuery.page"
+      :limit.sync="listQuery.limit"
+      @pagination="getList"
+    />
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
-      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
+      <el-form
+        ref="dataForm"
+        :rules="rules"
+        :model="temp"
+        label-position="left"
+        style=" margin-left: 50px"
+      >
         <el-form-item label="歌名" prop="yeziyu_name">
           <el-input v-model="temp.yeziyu_name" placeholder="请输入歌名" />
         </el-form-item>
         <el-form-item label="弹幕" prop="yeziyu_data">
-          <el-input v-model="temp.yeziyu_data" :autosize="{ minRows: 2, maxRows: 4}" type="textarea" placeholder="请输入对应弹幕" />
+          <el-input
+            v-model="temp.yeziyu_data"
+            :autosize="{ minRows: 2, maxRows: 4 }"
+            type="textarea"
+            placeholder="请输入对应弹幕"
+          />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">
-          取消
-        </el-button>
-        <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()">
+        <el-button @click="dialogFormVisible = false"> 取消 </el-button>
+        <el-button
+          type="primary"
+          @click="dialogStatus === 'create' ? createData() : updateData()"
+        >
           确定
         </el-button>
       </div>
     </el-dialog>
-
   </div>
 </template>
 
 <script>
-import { yeziyuList, yeziyuCreateArticle, yeziyuUpdateArticle } from '@/api/article'
+import {
+  yeziyuList,
+  yeziyuCreateArticle,
+  yeziyuUpdateArticle
+} from '@/api/article'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // 基于el-pagination二次包装
@@ -111,7 +192,10 @@ export default {
         yeziyu_data: undefined,
         sort: '+id'
       },
-      sortOptions: [{ label: 'ID 正序', key: '+id' }, { label: 'ID 降序', key: '-id' }],
+      sortOptions: [
+        { label: 'ID 正序', key: '+id' },
+        { label: 'ID 降序', key: '-id' }
+      ],
       temp: {
         id: undefined,
         yeziyu_name: undefined,
@@ -119,13 +203,19 @@ export default {
       },
       dialogFormVisible: false,
       dialogStatus: '',
-      textMap: { // 弹窗标题
+      textMap: {
+        // 弹窗标题
         update: '修改',
         create: '新增'
       },
-      rules: { // 判断
-        yeziyu_name: [{ required: true, message: '歌名是必填的', trigger: 'blur' }],
-        yeziyu_data: [{ required: true, message: '弹幕是必填的', trigger: 'blur' }]
+      rules: {
+        // 判断
+        yeziyu_name: [
+          { required: true, message: '歌名是必填的', trigger: 'blur' }
+        ],
+        yeziyu_data: [
+          { required: true, message: '弹幕是必填的', trigger: 'blur' }
+        ]
       },
       downloadLoading: false // 导出
     }
@@ -134,9 +224,12 @@ export default {
     this.getList()
   },
   methods: {
+    indexMethod(index) {
+      return index + 1 + (this.listQuery.page - 1) * this.listQuery.limit
+    },
     getList() {
       this.listLoading = true
-      yeziyuList(this.listQuery).then(response => {
+      yeziyuList(this.listQuery).then((response) => {
         this.list = response.data.items
         this.total = response.data.total
 
@@ -214,7 +307,7 @@ export default {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           yeziyuUpdateArticle().then(() => {
-            const index = this.list.findIndex(v => v.id === this.temp.id)
+            const index = this.list.findIndex((v) => v.id === this.temp.id)
             this.list.splice(index, 1, this.temp)
             this.dialogFormVisible = false
             this.$notify({
@@ -240,7 +333,7 @@ export default {
     // 导出按钮事件
     handleDownload() {
       this.downloadLoading = true
-      import('@/vendor/Export2Excel').then(excel => {
+      import('@/vendor/Export2Excel').then((excel) => {
         const tHeader = ['id', '歌名', '弹幕']
         const filterVal = ['id', 'yeziyu_name', 'yeziyu_data']
         const data = this.formatJson(filterVal)
@@ -253,13 +346,15 @@ export default {
       })
     },
     formatJson(filterVal) {
-      return this.list.map(v => filterVal.map(j => {
-        if (j === 'timestamp') {
-          return parseTime(v[j])
-        } else {
-          return v[j]
-        }
-      }))
+      return this.list.map((v) =>
+        filterVal.map((j) => {
+          if (j === 'timestamp') {
+            return parseTime(v[j])
+          } else {
+            return v[j]
+          }
+        })
+      )
     },
     getSortClass: function(key) {
       const sort = this.listQuery.sort
